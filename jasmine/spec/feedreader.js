@@ -85,11 +85,8 @@ $(
        * Remember, loadFeed() is asynchronous so this test will require
        * the use of Jasmine's beforeEach and asynchronous done() function.
        */
-      beforeEach(function(done) {
-        loadFeed(0, () => {
-          done();
-        });
-      });
+      beforeEach(done => loadFeed(0, done));
+      
       it("should get initial entries", function(done) {
         expect(document.querySelector(".feed .entry")).toBeDefined();
         done();
@@ -106,8 +103,10 @@ $(
       beforeEach(function(done) {
         loadFeed(0, () => {
           feedOne = document.querySelector(".feed").innerHTML;
+          console.log('feedOne done');
           loadFeed(1, () => {
             feedTwo = document.querySelector(".feed").innerHTML;
+            console.log('feedTwo done');
             done();
           });
         });
@@ -115,8 +114,7 @@ $(
       });
       it("two feeds have different content", function(done) {
         expect(feedOne).not.toEqual(feedTwo);
-        console.log(feedOne);
-        console.log(feedTwo);
+        console.log(`feedOne: ${feedOne.length}, feedTwo: ${feedTwo.length}`);
         done();
       });
     });
