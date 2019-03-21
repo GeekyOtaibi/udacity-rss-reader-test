@@ -102,19 +102,21 @@ $(
        * by the loadFeed function that the content actually changes.
        * Remember, loadFeed() is asynchronous.
        */
-      var feedOne,feedTwo;
+      var feedOne, feedTwo;
       beforeEach(function(done) {
-          loadFeed(0, () => {
-            feedOne = document.querySelector(".feed").innerHTML;
-            done();
-          });
+        loadFeed(0, () => {
+          feedOne = document.querySelector(".feed").innerHTML;
           loadFeed(1, () => {
             feedTwo = document.querySelector(".feed").innerHTML;
             done();
           });
+        });
+        
       });
       it("two feeds have different content", function(done) {
         expect(feedOne).not.toEqual(feedTwo);
+        console.log(feedOne);
+        console.log(feedTwo);
         done();
       });
     });
