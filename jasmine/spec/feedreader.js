@@ -91,7 +91,7 @@ $(
         });
       });
       it("should get initial entries", function(done) {
-        expect(document.querySelector(".entry")).toBeDefined();
+        expect(document.querySelector(".feed .entry")).toBeDefined();
         done();
       });
     });
@@ -102,23 +102,19 @@ $(
        * by the loadFeed function that the content actually changes.
        * Remember, loadFeed() is asynchronous.
        */
-      var feed_container = [];
+      var feedOne,feedTwo;
       beforeEach(function(done) {
-        for (index in allFeeds) {
-          document.querySelector(".feed").innerHTML = "";
-          loadFeed(index, () => {
-            feed_container.push(document.querySelector(".feed"));
+          loadFeed(0, () => {
+            feedOne = document.querySelector(".feed").innerHTML;
             done();
           });
-        }
+          loadFeed(1, () => {
+            feedTwo = document.querySelector(".feed").innerHTML;
+            done();
+          });
       });
-      it("each feed has different content", function(done) {
-        expect(feed_container).toBeDefined();
-        for (var x = 0; x < feed_container.length - 1; x++) {
-          expect(feed_container[x].innerHTML).not.toEqual(
-            feed_container[x + 1].innerHTML
-          );
-        }
+      it("two feeds have different content", function(done) {
+        expect(feedOne).not.toEqual(feedTwo);
         done();
       });
     });
